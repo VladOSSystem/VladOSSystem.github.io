@@ -1,0 +1,36 @@
+import { bs } from '../../shared/BrowserSession';
+import constants from '../../shared/constants';
+import login from '../../utils/login';
+import { URL } from '../../_e2e_vars/URL';
+import { befors } from '../../functions/beforEach.e2e';
+  
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+
+  
+export const overview = async () => { 
+  
+describe('Overview project info', () => {
+  
+  befors({
+     goto: URL.OVERVIEW.info(),
+     aftEach: true
+    });
+
+test('Overview project info Webcam response', async () => {
+  await bs.page.waitFor(constants.ASYNC_TRANSITION_TIMEOUT);
+  await bs.page.waitFor(constants.SECOND_PEN_BTN);
+  await bs.page.click(constants.SECOND_PEN_BTN);
+  await bs.page.waitFor(constants.ASYNC_TRANSITION_TIMEOUT);
+  await bs.page.waitFor(constants.WEB_CAM_URL);
+  await bs.page.type(constants.WEB_CAM_URL, constants.WEB_CAM_URL_VAL);
+  await bs.startInter();
+  await bs.page.waitFor(constants.SECOND_SAVE_BTN);
+  await bs.page.click(constants.SECOND_SAVE_BTN);
+  await bs.page.waitForResponse(
+  response =>new RegExp(/(api\/projects\/\d+\/webcam)/).test(response.url()));
+  await bs.stopInter();
+  expect(bs.interArr[0].status).toEqual(200);
+},40000);
+    
+})
+})

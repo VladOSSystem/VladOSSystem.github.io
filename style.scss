@@ -174,6 +174,54 @@ img {
 .ul{
   color: $gray;
 }
+.ul p {
+  font-size: 15px;
+  margin-left: 10px;
+} 
+.code-block-inner{
+  max-width: 5%;
+}
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: justify;
+  font-size: 14px;
+}
+@media screen and (max-width: 425px) {
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: justify;
+    font-size: 10px;
+  }
+}
+@media screen and (max-width: 330px) {
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: justify;
+    font-size: 7px;
+  }
+}
+.img-puppeteer{
+  display: flex;
+  justify-content: center;
+  
+}
+.code-block{
+  background-color: rgba(201, 201, 201, 0.507);
+  border-radius: 3px;
+}
+
+
+.gif{
+  display:flex;
+  justify-content: center;
+
+}
+.img-puppeteer img{
+  height: 200px;
+}
 .site-avatar {
   float: left;
   width: 70px;

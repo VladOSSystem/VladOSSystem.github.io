@@ -15,6 +15,7 @@
     href="{{ site.baseurl }}/feed.xml" />
   <link rel=icon href="../images/favicomatic/favicon-32x32.png" sizes="32x32 48x48" type="image/vnd.microsoft.icon">
   <link rel="stylesheet" href="../_sass/main.scss">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
 </head>
@@ -43,32 +44,185 @@
     </div>
     <div class="line"></div>
     <h1>E2E Testing</h1>
-    <h4>We have decided to integrate testing tools: "Puppeteer" to the project,
-      for testing real user scenario with the server response.</h4>
-     <h4>Puppeteer is a Node.js library which provides a high-level API to control headless Chrome or Chromium or to interact with the DevTools protocol. It’s maintained by the Chrome DevTools team.</h4>
-    <h4>What puppeteer can do?</h4>
+    <!-- <h4>We have decided to integrate testing tools: "Puppeteer" to the project,
+      for testing real user scenario with the server response.</h4> -->
+    <h4>What is the E2E?</h4>
+    <p>End-to-end testing is where you test your whole application from start to finish. It involves assuring that all
+      the integrated pieces of an application function and work together as expected.</p>
+    <p>End-to-end tests simulate real user scenarios, essentially testing how a real user would use the application.
+    </p>
+    <div class="line"></div>
+    <h4>What E2E tests can do?</h4>
     <ul class="ul">
-        <li>scrape web pages</li>
-        <li>automate form submissions</li>
-        <li>perform any kind of browser automation</li>
-        <li>track page loading performance</li>
-        <li>create server-side rendered versions of SPA</li>
-        <li>make screenshots</li>
-        <li>simulate mobile browsers </li>
-        <li>create automating testing</li>
-        <li>generate PDF from web pages</li>
-      </ul>  
-      <h4>Puppeteer is very useful for several task types on the web (crawling, testing, debugging, scrapping, automation..Etc) </h4>
-      <h4>In our case, we test all UI components with the server response.</h4>
-      <h4> For example: here Gif</h4>
-     <img src="/images/ezgif.com-video-to-gif.gif" alt="">
+      <li>opening pages in a browser and searching for certain element.</li>
+      <li>performing a set of clicks and keyboard types.</li>
+      <li>ensuring that a user is successfully created</li>
+    </ul>
+    <div class="line"></div>
+    <h4>Why we should integrate, E2E testing in the project.</h4>
+    <p>We currently write unit tests and integration tests for our code.</p>
+    <pp>These tests are used to:</pp>
+    <ul class="ul">
+      <li>specify our system</li>
+      <li>prevent bugs and regression</li>
+      <li>perform continuous integration</li>
+    </ul>
+    <p>Furthermore, these tests run as frequently as possible to provide feedback and to ensure that our system remains
+      clean.</p>
+    <p>The motivation for an additional layer of E2E tests lies in the benefits of having a fully automated test suite.
+      These benefits include increasing developer velocity, as well as other benefits previously mentioned.</p>
+    <p>E2E tests allow us to cover sections of the application that unit tests and integration tests don’t cover. This
+      is because unit tests and integration tests only take a small piece of the application and assess that piece in
+      isolation.</p>
+    <p>Even if these pieces work well by themselves, you don’t necessarily know if they’ll work together as a whole.
+      Having a suite of end-to-end tests on top of unit and integration tests allows us to test our entire application.
+    </p>
+    <img src="../images/2hCjNrylujhop6fe8MXH7vzINh0ek6eqCRqh.png" alt="">
+    <div class="line"></div>
+    <h4>Our tool for integrating is "Puppeteer"</h4>
+    <div class="img-puppeteer">
+      <img src="../images/29446482-04f7036a-841f-11e7-9872-91d1fc2ea683.png" alt="">
+    </div>
+    <p>Puppeteer is a Node library which provides a high-level API to control Chrome or Chromium over the DevTools
+      Protocol. Puppeteer runs headless by default, but can be configured to run full (non-headless) Chrome or Chromium.
+    </p>
+    <p>Puppeteer is very useful for several task types on the web (crawling, testing, debugging, scrapping,
+      automation..Etc) </p>
+    <div class="line"></div>
 
+    <div class="line"></div>
+
+    <h4>In our case, we test all UI components with the server response.</h4>
+    <p> For example: here Gif:</p>
+    <div class="gif">
+      <img src="/images/ezgif.com-video-to-gif.gif" alt="">
+    </div>
+    <br>
+    <div class="line"></div>
+    <h4>Some source code.</h4>
+    <div class="code-block">
+      <div class="code-block-inner">
+
+      </div>
+      <p class="code-block-inner">
+
+        <pre>
+
+        import puppeteer from 'puppeteer'
+
+        class BrowserSession {
+          page;
+          browser;
+          interArr = [];
+          interseptionEnabled = false;
+          async setup() {
+            this.browser = await puppeteer.launch({
+              headless: true,
+              slowMo: 1,
+            });
+          }
+          async initNewPage() {
+            this.page = await this.browser.newPage();
+          }
+          teardown() {
+            this.browser.close();
+          }
+          // Interception
+          async startInter(){
+            this.interseptionEnabled = true;
+          await this.page.setRequestInterception(this.interseptionEnabled); 
+            this.page.on('request', interceptedRequest => {
+              if (this.interseptionEnabled) { // to avoid error "Request Interception is not enabled!"
+                interceptedRequest.continue();
+              }
+            });
+              this.page.on('response', response => {
+                const req = response.request();
+                const obj = {url:req.url(),status:response.status(),method:req.method()};
+                this.interArr.push(obj);
+              });
+          }
+          async stopInter(){
+            this.interseptionEnabled = false;
+            await this.page.setRequestInterception(this.interseptionEnabled); 
+          }
+          resetInter() {
+            this.interArr = [];
+          }
+        }
+
+        export let bs = new BrowserSession()
+          </pre>
+    </div>
+    <div class="line"></div>
+    <div class="code-block">
+      <div class="code-block-inner">
+
+      </div>
+      <p class="code-block-inner">
+
+        <pre>
+
+                  import { bs } from '../../shared/BrowserSession';
+                  import constants from '../../shared/constants';
+                  import login from '../../utils/login';
+                  import { URL } from '../../_e2e_vars/URL';
+                  import { befors } from '../../functions/beforEach.e2e';
+                    
+                  jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+                  
+                    
+                  export const overview = async () => { 
+                    
+                  describe('Overview project info', () => {
+                    
+                    befors({
+                       goto: URL.OVERVIEW.info(),
+                       aftEach: true
+                      });
+          
+                  test('Overview project info Webcam response', async () => {
+                    await bs.page.waitFor(constants.ASYNC_TRANSITION_TIMEOUT);
+                    await bs.page.waitFor(constants.SECOND_PEN_BTN);
+                    await bs.page.click(constants.SECOND_PEN_BTN);
+                    await bs.page.waitFor(constants.ASYNC_TRANSITION_TIMEOUT);
+                    await bs.page.waitFor(constants.WEB_CAM_URL);
+                    await bs.page.type(constants.WEB_CAM_URL, constants.WEB_CAM_URL_VAL);
+                    await bs.startInter();
+                    await bs.page.waitFor(constants.SECOND_SAVE_BTN);
+                    await bs.page.click(constants.SECOND_SAVE_BTN);
+                    await bs.page.waitForResponse(
+                    response =>new RegExp(/(api\/projects\/\d+\/webcam)/).test(response.url()));
+                    await bs.stopInter();
+                    expect(bs.interArr[0].status).toEqual(200);
+                  },40000);
+                      
+                   });
+                });
+                    </pre>
+    </div>
+    <div class="line"></div>
+    <br>
+    <div class="line"></div>
+    <h4>Our case.</h4>
+    <p>We're testing all UI, with server response</p>
+    <div class="line"></div>
+
+    <h4>Why E2E testing is really important?</h4>
+    <p>It allows developers to push code without worrying about breaking things. It enables releases with extra
+      confidence. And, it catches errors that are missed during manual regression testing.</p>
   </div>
 
   <div class="wrapper-footer">
     <div class="container">
       <footer class="footer">
-        <p>PMG-2019 </p>
+        <p>PMG - <a href="#" id="time"></a>
+          <script>
+            let date = new Date();
+            let year = date.getFullYear();
+            document.querySelector('#time').innerHTML = year;
+          </script>
+        </p>
       </footer>
     </div>
   </div>
