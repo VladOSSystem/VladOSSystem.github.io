@@ -1,51 +1,78 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
 
-    {% include meta.html %}
+<head>
+  <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
 
-    <!--[if lt IE 9]>
+  {% include meta.html %}
+
+  <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
-    <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
+  <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}"
+    href="{{ site.baseurl }}/feed.xml" />
+  <link rel=icon href="../images/favicomatic/favicon-32x32.png" sizes="32x32 48x48" type="image/vnd.microsoft.icon">
+  <link rel="stylesheet" href="../_sass/main.scss">
 
-    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
-  </head>
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
 
-  <body>
-    <div class="wrapper-masthead">
-      <div class="container">
-        <header class="masthead clearfix">
-          <a href="{{ site.baseurl }}/" class="site-avatar"><img src="{{ site.avatar }}" /></a>
+<body>
+  <div class="wrapper-masthead">
+    <div class="container">
+      <header class="masthead clearfix">
+        <a href="{{ site.baseurl }}/" class="site-avatar"><img src="/images/logo.661c8f60.jpg" /></a>
 
-          <div class="site-info">
-            <h1 class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
-            <p class="site-description">{{ site.description }}</p>
-          </div>
+        <div class="site-info">
+          <h1 class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
+          <p class="site-description">{{ site.description }}</p>
+        </div>
 
-          <nav>
-            <a href="{{ site.baseurl }}/">Blog</a>
-            <a href="{{ site.baseurl }}/about">About</a>
-          </nav>
-        </header>
-      </div>
+        <nav>
+        </nav>
+      </header>
+
     </div>
+  </div>
 
-    <div id="main" role="main" class="container">
-      {{ content }}
+  <div id="main" role="main" class="container">
+    <div class="p-row">
+      <p>Date of publish <a href="#">27.08.19</a></p>
     </div>
+    <div class="line"></div>
+    <h1>E2E Testing</h1>
+    <h4>We have decided to integrate testing tools: "Puppeteer" to the project,
+      for testing real user scenario with the server response.</h4>
+     <h4>Puppeteer is a Node.js library which provides a high-level API to control headless Chrome or Chromium or to interact with the DevTools protocol. It’s maintained by the Chrome DevTools team.</h4>
+    <h4>What puppeteer can do?</h4>
+    <ul class="ul">
+        <li>scrape web pages</li>
+        <li>automate form submissions</li>
+        <li>perform any kind of browser automation</li>
+        <li>track page loading performance</li>
+        <li>create server-side rendered versions of SPA</li>
+        <li>make screenshots</li>
+        <li>simulate mobile browsers </li>
+        <li>create automating testing</li>
+        <li>generate PDF from web pages</li>
+      </ul>  
+      <h4>Puppeteer is very useful for several task types on the web (crawling, testing, debugging, scrapping, automation..Etc) </h4>
+      <h4>In our case, we test all UI components with the server response.</h4>
+      <h4> For example: here Gif</h4>
+     <img src="/images/ezgif.com-video-to-gif.gif" alt="">
 
-    <div class="wrapper-footer">
-      <div class="container">
-        <footer class="footer">
-          {% include svg-icons.html %}
-        </footer>
-      </div>
+  </div>
+
+  <div class="wrapper-footer">
+    <div class="container">
+      <footer class="footer">
+        <p>PMG-2019 </p>
+      </footer>
     </div>
+  </div>
 
-    {% include analytics.html %}
-  </body>
+</body>
+
 </html>

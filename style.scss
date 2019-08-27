@@ -162,12 +162,24 @@ img {
     text-align: center;
   }
 }
-
+.p-row{
+  display: flex;
+  justify-content: flex-end;
+}
+.line{
+  height: 1px;
+  background-color: #eee;;
+  width: 100%;
+}
+.ul{
+  color: $gray;
+}
 .site-avatar {
   float: left;
   width: 70px;
   height: 70px;
   margin-right: 15px;
+
 
   @include mobile {
     float: none;
@@ -177,6 +189,7 @@ img {
 
   img {
     border-radius: 5px;
+    height: 70px;
   }
 }
 
